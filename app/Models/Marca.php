@@ -11,4 +11,8 @@ class Marca extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $fillable = [
+        'marca',
+        'imagem'
+    ];
 }
