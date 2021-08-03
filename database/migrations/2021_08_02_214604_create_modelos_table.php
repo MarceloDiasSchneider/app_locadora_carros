@@ -16,7 +16,7 @@ class CreateModelosTable extends Migration
         Schema::create('modelos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('marca_id');
-            $table->string('nome', 30);
+            $table->string('modelo', 30);
             $table->string('imagem', 100);
             $table->integer('numero_portas');
             $table->integer('lugares');
