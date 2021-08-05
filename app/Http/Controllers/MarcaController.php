@@ -85,7 +85,6 @@ class MarcaController extends Controller
             return response()->json(["error" => "Not Found"], 404);
         }
         $marca->delete();
-        $marca['removido'] = true;
         return $marca;
     }
 }
