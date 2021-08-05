@@ -50,7 +50,7 @@ class MarcaController extends Controller
     {
         $marca['marca'] = $this->marca->find($id);
         if ($marca['marca'] === null) {
-            return ["error" => "Not Found"];
+            return response()->json(["error" => "Not Found"], 404);
         }
         return $marca;
     }
@@ -66,7 +66,7 @@ class MarcaController extends Controller
     {
         $marca['marca'] = $this->marca->find($id);
         if ($marca['marca'] === null) {
-            return ["error" => "Not Found"];
+            return response()->json(["error" => "Not Found"], 404);
         }
         $marca['marca']->update($request->all());
         return $marca;
@@ -82,7 +82,7 @@ class MarcaController extends Controller
     {
         $marca = $this->marca->find($id);
         if ($marca['marca'] === null) {
-            return ["error" => "Not Found"];
+            return response()->json(["error" => "Not Found"], 404);
         }
         $marca->delete();
         $marca['removido'] = true;
