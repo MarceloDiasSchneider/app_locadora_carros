@@ -20,7 +20,7 @@ class Marca extends Model
     {
         return [
             'marca' => 'required|unique:marcas,marca,' . $this->id . '|max:30',
-            'imagem' => 'required|max:100'
+            'imagem' => 'required|file|mimes:png'
         ];
     }
 
@@ -29,8 +29,9 @@ class Marca extends Model
         return [
             'required' => 'O campo :attribute não é valido',
             'unique' => 'O campo :attribute já esta cadastrado',
-            'marca.max' => 'O campo marca deve conter até 30 caracteres',
-            'imagem.max' => 'O campo imagem deve conter até 100 caracteres'
+            'file' => 'Imagem deve ser um arquivo',
+            'mines' => 'A extenção do campo :attribute não é valida',
+            'marca.max' => 'O campo marca deve conter até 30 caracteres'
         ];
     }
 }
