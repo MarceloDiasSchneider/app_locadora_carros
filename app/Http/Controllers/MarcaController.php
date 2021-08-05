@@ -25,7 +25,7 @@ class MarcaController extends Controller
     public function index()
     {
         $marcas['marcas'] = $this->marca->all();
-        return $marcas;
+        return response()->json($marcas, 200);
     }
 
     /**
@@ -37,7 +37,7 @@ class MarcaController extends Controller
     public function store(Request $request)
     {
         $marca['marca'] = $this->marca->create($request->all());
-        return $marca;
+        return response()->json($marca, 201);
     }
 
     /**
@@ -52,7 +52,7 @@ class MarcaController extends Controller
         if ($marca['marca'] === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -69,7 +69,7 @@ class MarcaController extends Controller
             return response()->json(["error" => "Not Found"], 404);
         }
         $marca['marca']->update($request->all());
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -85,6 +85,6 @@ class MarcaController extends Controller
             return response()->json(["error" => "Not Found"], 404);
         }
         $marca->delete();
-        return $marca;
+        return response()->json($marca, 200);
     }
 }
