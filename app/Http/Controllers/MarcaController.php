@@ -24,8 +24,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas['marcas'] = $this->marca->all();
-        return response()->json($marcas, 200);
+        $marcas = $this->marca->all();
+        return response()->json(['marcas' => $marcas], 200);
     }
 
     /**
@@ -36,8 +36,9 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        $marca['marca'] = $this->marca->create($request->all());
-        return response()->json($marca, 201);
+        $request->validate($this->marca->rules(), $this->marca->feedback());
+        $marca = $this->marca->create($request->all());
+        return response()->json(['marca' => $marca], 201);
     }
 
     /**
@@ -48,11 +49,11 @@ class MarcaController extends Controller
      */
     public function show($id)
     {
-        $marca['marca'] = $this->marca->find($id);
-        if ($marca['marca'] === null) {
+        $marca = $this->marca->find($id);
+        if ($marca === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
-        return response()->json($marca, 200);
+        return response()->json(['marca' => $marca], 200);
     }
 
     /**
@@ -64,12 +65,26 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $marca['marca'] = $this->marca->find($id);
-        if ($marca['marca'] === null) {
+        $marca = $this->marca->find($id);
+        if ($marca === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
-        $marca['marca']->update($request->all());
-        return response()->json($marca, 200);
+        switch ($request->method()) {
+            case 'PUT':
+                $request->validate($marca->rules(), $marca->feedback());
+                break;
+            case 'PATCH':
+                $dynamic_rules = [];
+                foreach ($marca->rules() as $input => $rule) {
+                    if( array_key_exists( $input, $request->all() ) ) {
+                        $dynamic_rules[$input] = $rule;
+                    }
+                }
+                $request->validate($dynamic_rules, $marca->feedback());
+                break;
+        }
+        $marca->update($request->all());
+        return response()->json(['marca' => $marca], 200);
     }
 
     /**
@@ -81,10 +96,10 @@ class MarcaController extends Controller
     public function destroy($id)
     {
         $marca = $this->marca->find($id);
-        if ($marca['marca'] === null) {
+        if ($marca === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
         $marca->delete();
-        return response()->json($marca, 200);
+        return response()->json(['marca' => $marca], 200);
     }
 }
