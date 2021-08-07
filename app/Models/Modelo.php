@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+// use App\Models\Marca;
 
 class Modelo extends Model
 {
@@ -50,5 +51,10 @@ class Modelo extends Model
             'numero_portas.between' => 'O campo :attribute deve ser entre 2 e 5',
             'lugares.between' => 'O campo :attribute deve ser entre 2 e 20',
         ];
+    }
+
+    public function marca()
+    {
+        return$this->belongsTo(Marca::class);
     }
 }

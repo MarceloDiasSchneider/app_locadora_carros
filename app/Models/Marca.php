@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+// use App\Models\Modelo;
 class Marca extends Model
 {
     use HasFactory;
@@ -33,5 +33,10 @@ class Marca extends Model
             'mimes' => 'A extenção do campo :attribute não é valida',
             'marca.max' => 'O campo marca deve conter até 30 caracteres'
         ];
+    }
+
+    public function modelos()
+    {
+        return $this->hasMany(Modelo::class);
     }
 }
