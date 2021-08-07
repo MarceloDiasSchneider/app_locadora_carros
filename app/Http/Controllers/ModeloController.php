@@ -29,16 +29,6 @@ class ModeloController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -74,17 +64,6 @@ class ModeloController extends Controller
             return response()->json(["error" => "Not Found"], 404);
         }
         return response()->json(['modelo' => $modelo], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Modelo  $modelo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Modelo $modelo)
-    {
-        //
     }
 
     /**
