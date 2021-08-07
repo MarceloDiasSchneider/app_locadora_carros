@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class MarcaController extends Controller
 {
     /**
@@ -94,7 +94,15 @@ class MarcaController extends Controller
                 $request->validate($dynamic_rules, $marca->feedback());
                 break;
         }
-        $marca->update($request->all());
+        if ($request->imagem != null) {
+            Storage::disk('public')->delete($marca->imagem);
+            $imagem = $request->imagem;
+            $marca->imagem =  $imagem->store('images', 'public');
+        }
+        if ($request->get('marca') != null) {
+            $marca->marca = $request->get('marca');
+        }
+        $marca->update();
         return response()->json(['marca' => $marca], 200);
     }
 
@@ -110,6 +118,9 @@ class MarcaController extends Controller
         if ($marca === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
+        Storage::disk('public')->move($marca->imagem, 'deleted_' . $marca->imagem);
+        $marca->imagem = 'deleted_' . $marca->imagem;
+        $marca->update();
         $marca->delete();
         return response()->json(['marca' => $marca], 200);
     }
