@@ -30,7 +30,7 @@ class Marca extends Model
             'required' => 'O campo :attribute não é valido',
             'unique' => 'O campo :attribute já esta cadastrado',
             'file' => 'Imagem deve ser um arquivo',
-            'mines' => 'A extenção do campo :attribute não é valida',
+            'mimes' => 'A extenção do campo :attribute não é valida',
             'marca.max' => 'O campo marca deve conter até 30 caracteres'
         ];
     }
