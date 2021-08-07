@@ -45,7 +45,7 @@ class MarcaController extends Controller
         // alternativa 2
         $marca = $this->marca;
         $imagem = $request->imagem;
-        $marca->imagem =  $imagem->store('images', 'public');
+        $marca->imagem =  $imagem->store('images/marcas', 'public');
         $marca->marca = $request->get('marca');
         $marca->save();
 
@@ -97,7 +97,7 @@ class MarcaController extends Controller
         if ($request->imagem != null) {
             Storage::disk('public')->delete($marca->imagem);
             $imagem = $request->imagem;
-            $marca->imagem =  $imagem->store('images', 'public');
+            $marca->imagem =  $imagem->store('images/marcas', 'public');
         }
         if ($request->get('marca') != null) {
             $marca->marca = $request->get('marca');
