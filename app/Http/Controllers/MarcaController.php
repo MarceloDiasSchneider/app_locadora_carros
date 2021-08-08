@@ -43,10 +43,17 @@ class MarcaController extends Controller
         // $marca = $this->marca->create(['marca' => $request->get('marca'), 'imagem' => $imagem_urn]);
 
         // alternativa 2
+        // $marca = $this->marca;
+        // $imagem = $request->imagem;
+        // $marca->imagem =  $imagem->store('images/marcas', 'public');
+        // $marca->marca = $request->get('marca');
+        // $marca->save();
+
+        // alternativa 3
         $marca = $this->marca;
+        $marca->fill($request->all());
         $imagem = $request->imagem;
         $marca->imagem =  $imagem->store('images/marcas', 'public');
-        $marca->marca = $request->get('marca');
         $marca->save();
 
         return response()->json(['marca' => $marca], 201);
@@ -96,13 +103,14 @@ class MarcaController extends Controller
         }
         if ($request->imagem != null) {
             Storage::disk('public')->delete($marca->imagem);
+        }
+        $marca->fill($request->all());
+        if ($request->imagem != null) {
             $imagem = $request->imagem;
             $marca->imagem =  $imagem->store('images/marcas', 'public');
         }
-        if ($request->get('marca') != null) {
-            $marca->marca = $request->get('marca');
-        }
-        $marca->update();
+        $marca->save();
+
         return response()->json(['marca' => $marca], 200);
     }
 

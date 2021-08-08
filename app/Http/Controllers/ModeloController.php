@@ -36,16 +36,10 @@ class ModeloController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->modelo->rules(), $this->modelo->feedback());
         $modelo = $this->modelo;
-        $modelo->marca_id = $request->get('marca_id');
-        $modelo->modelo = $request->get('modelo');
+        $modelo->fill($request->all());
         $imagem = $request->imagem;
-        $modelo->imagem =  $imagem->store('images/modelos', 'public');
-        $modelo->numero_portas = $request->get('numero_portas');
-        $modelo->lugares = $request->get('lugares');
-        $modelo->air_bag = $request->get('air_bag');
-        $modelo->abs = $request->get('abs');
+        $modelo->imagem = $imagem->store('images/modelos', 'public');
         $modelo->save();
 
         return response()->json(['modelo' => $modelo], 201);
@@ -93,30 +87,16 @@ class ModeloController extends Controller
                 $request->validate($dynamic_rules, $modelo->feedback());
                 break;
         }
-        if ($request->get('marca_id') != null) {
-            $modelo->marca_id = $request->get('marca_id');
-        }
-        if ($request->get('modelo') != null) {
-            $modelo->modelo = $request->get('modelo');
-        }
         if ($request->imagem != null) {
             Storage::disk('public')->delete($modelo->imagem);
+        }
+        $modelo->fill($request->all());
+        if ($request->imagem != null) {
             $imagem = $request->imagem;
             $modelo->imagem =  $imagem->store('images/modelos', 'public');
         }
-        if ($request->get('numero_portas') != null) {
-            $modelo->numero_portas = $request->get('numero_portas');
-        }
-        if ($request->get('lugares') != null) {
-            $modelo->lugares = $request->get('lugares');
-        }
-        if ($request->get('air_bag') != null) {
-            $modelo->air_bag = $request->get('air_bag');
-        }
-        if ($request->get('abs') != null) {
-            $modelo->abs = $request->get('abs');
-        }
-        $modelo->update();
+        $modelo->save();
+
         return response()->json(['modelo' => $modelo], 200);
     }
 

@@ -24,6 +24,9 @@ class CreateModelosTable extends Migration
             $table->boolean('abs');
             $table->timestamps();
             $table->softDeletes();
+
+            //foreign key (constraints)
+            $table->foreign('marca_id')->references('id')->on('marca');
         });
     }
 
