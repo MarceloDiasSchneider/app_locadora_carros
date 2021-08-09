@@ -54,7 +54,7 @@ class CarroController extends Controller
         $carro->fill($request->all());
         $carro->save();
 
-        return response()->json(['marca' => $carro], 201);
+        return response()->json(['carro' => $carro], 201);
     }
 
     /**
@@ -69,7 +69,7 @@ class CarroController extends Controller
         if ($carro === null) {
             return response()->json(["error" => "Not Found"], 404);
         }
-        
+
         return response()->json(['carro' => $carro], 200);
     }
 
