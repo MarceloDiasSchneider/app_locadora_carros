@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use App\Models\Marca;
 
 class Modelo extends Model
 {
@@ -55,6 +54,11 @@ class Modelo extends Model
 
     public function marca()
     {
-        return$this->belongsTo(Marca::class);
+        return $this->belongsTo(Marca::class);
+    }
+
+    public function carros()
+    {
+        return $this->hasMany(Carro::class);
     }
 }
