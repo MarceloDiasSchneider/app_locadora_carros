@@ -17,12 +17,12 @@ class CreateLocacoesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('carro_id');
-            $table->dateTime('data_inicio_periodo');
-            $table->dateTime('data_final_previsto_periodo');
-            $table->dateTime('data_final_realizado_periodo');
+            $table->dateTime('data_inicio');
+            $table->dateTime('data_final_previsto');
+            $table->dateTime('data_final_realizado')->nullable();
             $table->float('valor_diaria', 8,2);
-            $table->integer('km_inicial');
-            $table->integer('km_final');
+            $table->integer('km_inicial')->nullable();
+            $table->integer('km_final')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
