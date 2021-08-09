@@ -13,7 +13,7 @@ class CreateLocacoesTable extends Migration
      */
     public function up()
     {
-        Schema::create('locacaos', function (Blueprint $table) {
+        Schema::create('locacoes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('carro_id');
@@ -39,6 +39,6 @@ class CreateLocacoesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locacaos');
+        Schema::dropIfExists('locacoes');
     }
 }
