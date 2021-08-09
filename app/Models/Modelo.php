@@ -44,7 +44,7 @@ class Modelo extends Model
             'mimes' => 'A extenção do campo :attribute não é valida',
             'integer' => 'O campo :attribute não é valido',
             'boolean' => 'O campo :attribute não é valido',
-            'marca.exist' => 'O campo :attribute não é valido',
+            'marca_id.exists' => 'O campo :attribute não é valido',
             'modelo.min' => 'O campo :attribute deve ter ao menos 5 caracteres',
             'modelo.max' => 'O campo :attribute deve ter até 30 caracteres',
             'modelo.unique' => 'O campo :attribute já foi cadastrado',
