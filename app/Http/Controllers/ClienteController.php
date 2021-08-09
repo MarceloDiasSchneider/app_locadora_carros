@@ -34,7 +34,7 @@ class ClienteController extends Controller
             $cliente->filterFields($request->fields);
         }
         if($request->has('fields_locacoes')) {
-            $cliente->filterRelationsFields('locacoes', $request->fields_locacoes, 'id');
+            $cliente->filterRelationsFields('locacoes', $request->fields_locacoes, 'cliente_id');
         }
 
         return response()->json(['clientes' => $cliente->getResult()], 200);
