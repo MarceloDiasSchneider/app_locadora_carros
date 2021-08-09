@@ -37,6 +37,9 @@ class ModeloController extends Controller
         if($request->has('fields_marca')) {
             $modelos->filterRelationsFields('marca', $request->fields_marca, 'id');
         }
+        if($request->has('fields_carros')) {
+            $modelos->filterRelationsFields('carros', $request->fields_carros, 'modelo_id');
+        }
         return response()->json(['modelos' => $modelos->getResult()], 200);
     }
 
@@ -128,6 +131,7 @@ class ModeloController extends Controller
         $modelo->imagem = 'deleted_' . $modelo->imagem;
         $modelo->update();
         $modelo->delete();
+
         return response()->json(['modelo' => $modelo], 200);
     }
 }
