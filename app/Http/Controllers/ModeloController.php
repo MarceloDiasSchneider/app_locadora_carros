@@ -20,11 +20,25 @@ class ModeloController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
-        $modelos = $this->modelo->with('marca')->get();
+        $modelos = $this->modelo;
+        // implementando filtros
+        if($request->has('ids')) {
+            $ids = explode(',', $request->ids);
+            $modelos = $modelos->whereIn('id', $ids);
+        }
+        if($request->has('fields_marca') && strpos($request->fields, 'marca_id') !== false) {
+            $modelos = $modelos->with('marca:id,' . $request->fields_marca);
+        }
+        if($request->has('fields')) {
+            $fields = $request->fields;
+            $modelos = $modelos->selectRaw($fields);
+        }
+        $modelos = $modelos->get();
         return response()->json(['modelos' => $modelos], 200);
     }
 

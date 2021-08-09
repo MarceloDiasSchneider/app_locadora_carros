@@ -20,11 +20,26 @@ class MarcaController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
-        $marcas = $this->marca->with('modelos')->get();
+        $marcas = $this->marca;
+        // implementando filtros
+        if($request->has('ids')) {
+            $ids = explode(',', $request->ids);
+            $marcas = $marcas->whereIn('id', $ids);
+        }
+        if($request->has('fields_modelos')) {
+            // $marcas = $marcas->with('modelos:' . $request->fields_modelos);
+            $marcas = $marcas->with('modelos');
+        }
+        if($request->has('fields')) {
+            $fields = $request->fields;
+            $marcas = $marcas->selectRaw($fields);
+        }
+        $marcas = $marcas->get();
         return response()->json(['marcas' => $marcas], 200);
     }
 
