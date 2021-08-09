@@ -17,8 +17,8 @@ class CreateCarrosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('modelo_id');
             $table->string('placa', 10)->unique();
-            $table->boolean('disponivel');
-            $table->integer('km');
+            $table->boolean('disponivel')->default(true);
+            $table->integer('km')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
@@ -34,7 +34,7 @@ class CreateCarrosTable extends Migration
      */
     public function down()
     {
-        
+
         Schema::dropIfExists('carros');
     }
 }
