@@ -19,16 +19,19 @@ class AuthController extends Controller
 
     public function logout()
     {
-        return 'logout';
+        auth('api')->logout();
+        return response()->json(['token' => 'token has been revoked'], 200);
     }
 
     public function refresh()
     {
-        return 'refresh';
+        $token = auth('api')->refresh();
+        return response()->json(['token' => $token], 200);
+
     }
 
     public function me()
     {
-        return 'me';
+        return response()->json(auth()->user(), 200);
     }
 }
