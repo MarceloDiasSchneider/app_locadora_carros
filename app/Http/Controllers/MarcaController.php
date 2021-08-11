@@ -31,6 +31,9 @@ class MarcaController extends Controller
         if($request->has('ids')) {
             $marca->filterIds($request->ids);
         }
+        if($request->has('marca')) {
+            $marca->filterFieldExactly('marca', $request->marca);
+        }
         if($request->has('fields')) {
             $marca->filterFields($request->fields);
         }

@@ -17,6 +17,17 @@ class AbstractQueryBuilderRepositories
         $this->model = $this->model->whereIn('id', $ids);
     }
 
+    public function filterFieldExactly($field, $values)
+    {
+        $values = explode(',', $values);
+        $this->model = $this->model->whereIn($field, $values);
+    }
+
+    public function filterFieldLike($field, $value)
+    {
+        $this->model = $this->model->where($field, 'like', '%'.$value.'%');
+    }
+
     public function filterFields($fields)
     {
         $this->model = $this->model->selectRaw($fields);
