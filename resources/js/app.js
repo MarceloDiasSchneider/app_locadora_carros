@@ -20,7 +20,9 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('login-component', require('./components/Login.vue').default);
+// views de autenticação
+Vue.component('login-component', require('./components/auth/Login.vue').default);
+
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('index-marcas-component', require('./components/marcas/Index.vue').default);
 Vue.component('card-component', require('./components/common-components/Card.vue').default);

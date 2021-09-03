@@ -25,7 +25,16 @@
                                 <input id="password" type="password" class="form-control" name="password" v-model="password" required autocomplete="current-password">
                             </div>
                         </div>
-
+                            
+                        <div class="form-group row" v-if="erro">
+                            <div class="col-md-6 offset-md-4">
+                                <div class="form-check">
+                                    <label class="form-check-label text-danger" for="remember">
+                                        {{ erro }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
@@ -66,21 +75,22 @@
                 method: 'POST',
                 email: null,
                 password: null,
+                erro: null,
             }
         },
         methods: {
             login(e) {
-                let myHeaders = new Headers({
+                const myHeaders = new Headers({
                     "Accept": "application/json",
                     "Content-Type": "application/x-www-form-urlencoded",
                 });
 
-                let urlencoded = new URLSearchParams({
+                const urlencoded = new URLSearchParams({
                     "email": this.email,
                     "password": this.password
                 });
 
-                let requestOptions = {
+                const requestOptions = {
                 method: this.method,
                 headers: myHeaders,
                 body: urlencoded,
@@ -90,10 +100,14 @@
                 fetch(this.url, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    document.cookie = `token=${result.token};SameSite=Lax`
+                    if (result.error) this.erro = result.error;
+                    if (result.token) {
+                        this.token = result.token;
+                        document.cookie = `token=${result.token};SameSite=Lax`;
+                        e.target.submit()
+                    }
                 })
                 .catch(error => console.log('error', error));
-                e.target.submit()
             }
         },
     }
