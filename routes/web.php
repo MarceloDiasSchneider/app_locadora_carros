@@ -23,4 +23,4 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/marcas', function() {
     return view('app.marcas');
-})->name('marcas');
+})->name('marcas')->middleware('auth');
