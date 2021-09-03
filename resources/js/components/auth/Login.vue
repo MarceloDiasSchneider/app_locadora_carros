@@ -71,7 +71,7 @@
         ],
         data() {
             return {
-                url: 'http://localhost:8000/api/login',
+                url: 'http://localhost:8000/api/v1/login',
                 method: 'POST',
                 email: null,
                 password: null,
