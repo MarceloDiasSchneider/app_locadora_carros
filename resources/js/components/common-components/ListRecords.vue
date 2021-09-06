@@ -9,10 +9,11 @@
     </thead>
 
     <tbody>
-        <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
+        <tr v-for="item in listar" :key="item.id">
+            <th scope="row">{{ item.id }}</th>
+            <th>{{ item.marca }}</th>
+            <th><img :src="'/storage/'+item.imagem" :alt="item.marca" width="30" heigth="30"></th>
+            <!-- <th><img :src="'/storage/images/marcas/39QHMdntshV9OkdZYanP1J6P12MQKne0hpSPn6Ng.png'" :alt="item.marca" width="30" heigth="30"></th> -->
         </tr>
     </tbody>
 </table>
@@ -20,6 +21,10 @@
 
 <script>
 export default {
-
+    props: {
+        listar: {
+            type: Array
+        }
+    }
 }
 </script>

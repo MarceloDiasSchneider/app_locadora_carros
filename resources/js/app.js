@@ -29,6 +29,7 @@ Vue.component('card-component', require('./components/common-components/Card.vue
 Vue.component('search-component', require('./components/common-components/Search.vue').default);
 Vue.component('list-records-component', require('./components/common-components/ListRecords.vue').default);
 Vue.component('modal-component', require('./components/common-components/Modal.vue').default);
+Vue.component('alert-component', require('./components/common-components/Alert.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
