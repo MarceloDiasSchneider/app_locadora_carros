@@ -26,7 +26,6 @@ Vue.component('login-component', require('./components/auth/Login.vue').default)
 Vue.component('home-component', require('./components/Home.vue').default);
 Vue.component('index-marcas-component', require('./components/marcas/Index.vue').default);
 Vue.component('card-component', require('./components/common-components/Card.vue').default);
-Vue.component('search-component', require('./components/common-components/Search.vue').default);
 Vue.component('list-records-component', require('./components/common-components/ListRecords.vue').default);
 Vue.component('modal-component', require('./components/common-components/Modal.vue').default);
 Vue.component('alert-component', require('./components/common-components/Alert.vue').default);
