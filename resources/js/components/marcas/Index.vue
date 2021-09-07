@@ -104,6 +104,8 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -121,12 +123,7 @@ export default {
     };
   },
   computed: {
-    token() {
-      return document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        .split("=")[1];
-    },
+    ...mapState(["token"]),
     filtroMarcas() {
       let filter = [];
       if (this.busca) {

@@ -102,7 +102,6 @@
                 .then(result => {
                     if (result.error) this.erro = result.error;
                     if (result.token) {
-                        this.token = result.token;
                         document.cookie = `token=${result.token};SameSite=Lax`;
                         e.target.submit()
                     }
