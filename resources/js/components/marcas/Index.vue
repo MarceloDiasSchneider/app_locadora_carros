@@ -3,8 +3,15 @@
     <card-component>
       <template v-slot:header>
         <div class="row">
-          <div class="col-xs-6 col-sm-6 mb-3">Lista de Marcas</div>
-          <div class="col-xs-6 col-sm-6 input-group mb-3">
+          <div class="col-xs-12 col-sm-6 mb-3">Lista de Marcas</div>
+          <div class="col-xs-3 col-sm-2 input-group mb-3">
+            <select class="custom-select" v-model="per_page">
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="col-xs-9 col-sm-4 input-group mb-3">
             <input
               type="text"
               v-model="busca"
@@ -15,7 +22,11 @@
         </div>
       </template>
       <template v-slot:body>
-        <list-records-component :listar="filtroMarcas" :message="message" @excluir-marcas="excluirMarcas">
+        <list-records-component
+          :listar="filtroMarcas"
+          :message="message"
+          @excluir-marcas="excluirMarcas"
+        >
         </list-records-component>
         <alert-component
           v-if="tipo"
@@ -24,14 +35,21 @@
         ></alert-component>
       </template>
       <template v-slot:footer>
-        <button
-          type="submit"
-          class="btn btn-primary float-right"
-          data-toggle="modal"
-          :data-target="'#' + modalId"
-        >
-          Adicionar
-        </button>
+        <div class="row">
+          <div class="col-xs-12 col-sm-8">
+            <paginate-component :paginacao="paginacao" @page_paginate="pagePaginate"></paginate-component>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <button
+              type="submit"
+              class="btn btn-primary float-right"
+              data-toggle="modal"
+              :data-target="'#' + modalId"
+            >
+              Adicionar
+            </button>
+          </div>
+        </div>
       </template>
     </card-component>
     <modal-component :modal-id="modalId" titulo="Adicionar Marca">
@@ -91,6 +109,9 @@ export default {
     return {
       modalId: "registra-marca",
       url: "http://localhost:8000/api/v1/marca",
+      per_page: 5,
+      paginacao: null,
+      page: 1,
       marca: null,
       arquivoImagem: [],
       tipo: null,
@@ -109,7 +130,9 @@ export default {
     filtroMarcas() {
       let filter = [];
       if (this.busca) {
-        let filtered = this.marcas.filter(marca => marca.marca.includes(this.busca));
+        let filtered = this.marcas.filter((marca) =>
+          marca.marca.includes(this.busca)
+        );
         if (filtered !== undefined) filter = filtered;
       }
       if (this.busca) {
@@ -133,20 +156,33 @@ export default {
   },
   methods: {
     carregarMarcas() {
+      let params = new URLSearchParams({
+        per_page: this.per_page,
+        page: this.page,
+        // ids: this.busca,
+        // marca: this.busca,
+      });
       const config = {
         headers: {
           Authorization: "bearer " + this.token,
           Accept: "application/json",
         },
+        params: params,
       };
       axios
+        // .get(`${this.url}/?per_page=${this.per_page}`, config)
         .get(this.url, config)
         .then((response) => {
-          this.marcas = response.data.marcas;
+          this.marcas = response.data.marcas.data;
+          this.paginacao = response.data.marcas;
+          console.log(this.paginacao);
         })
         .catch((erro) => {
-          console.log(erro);
+          console.error(erro);
         });
+    },
+    pagePaginate(page) {
+      this.page = page
     },
     excluirMarcas(id) {
       const config = {
@@ -204,6 +240,14 @@ export default {
   },
   mounted() {
     this.carregarMarcas();
+  },
+  watch: {
+    per_page() {
+      this.carregarMarcas();
+    },
+    page() {
+      this.carregarMarcas();
+    },
   },
 };
 </script>

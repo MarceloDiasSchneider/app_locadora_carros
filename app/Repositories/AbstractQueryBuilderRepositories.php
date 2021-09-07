@@ -42,5 +42,10 @@ class AbstractQueryBuilderRepositories
     {
         return $this->model->get();
     }
+
+    public function getWithPagination($itemPerPage)
+    {
+        return $this->model->paginate($itemPerPage);
+    }
 }
 ?>

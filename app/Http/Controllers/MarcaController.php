@@ -40,6 +40,9 @@ class MarcaController extends Controller
         if($request->has('fields_modelos')) {
             $marca->filterRelationsFields('modelos', $request->fields_modelos, 'marca_id');
         }
+        if($request->has('per_page')) {
+            return response()->json(['marcas' => $marca->getWithPagination($request->per_page)], 200);
+        }
         return response()->json(['marcas' => $marca->getResult()], 200);
     }
 
