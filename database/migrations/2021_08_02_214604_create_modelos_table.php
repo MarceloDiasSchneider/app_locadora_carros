@@ -26,7 +26,7 @@ class CreateModelosTable extends Migration
             $table->softDeletes();
 
             //foreign key (constraints)
-            $table->foreign('marca_id')->references('id')->on('marca');
+            $table->foreign('marca_id')->references('id')->on('marcas');
         });
     }
 
